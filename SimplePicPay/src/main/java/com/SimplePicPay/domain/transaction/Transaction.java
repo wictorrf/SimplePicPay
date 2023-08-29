@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name="transactions")
@@ -22,17 +23,22 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(of="id")
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private BigDecimal amount;// valor da transacao
+
     @ManyToOne
-    private User sender;
     @JoinColumn(name = "sender_id")
+    private User sender;
+
     @ManyToOne
     @JoinColumn(name = "reciver_id")
     private User reciver;
+
     private LocalDateTime timestamp; // quando foi realizada a transacao
 }

@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-SimplePicPayApplication<SimplePicPay>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.SimplePicPay.SimplePicPayApplication",
+            "projectName": "SimplePicPay",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
