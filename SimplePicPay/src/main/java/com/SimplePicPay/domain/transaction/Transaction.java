@@ -41,4 +41,8 @@ public class Transaction {
     private User reciver;
 
     private LocalDateTime timestamp; // quando foi realizada a transacao
+
+    public BigDecimal value() {
+        return null;
+    }
 }

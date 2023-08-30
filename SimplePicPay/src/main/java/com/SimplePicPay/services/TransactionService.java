@@ -2,8 +2,9 @@ package com.SimplePicPay.services;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalAccessor;
+import java.util.Map;
 
-import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -27,7 +28,10 @@ public class TransactionService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void createTransaction(TransactionDTO transaction) throws Exception {
+    @Autowired
+    private NotificationService notification;
+
+    public Transaction createTransaction(TransactionDTO transaction) throws Exception {
         User sender = this.userService.findUserById(transaction.senderId());
         User reciver = this.userService.findUserById(transaction.reciverId());
 
@@ -51,6 +55,11 @@ public class TransactionService {
         repository.save(newtransaction);
         userService.saveUser(sender);
         userService.saveUser(reciver);
+
+        this.notification.sendNotification(sender, "Transação realizada com sucesso!");
+        this.notification.sendNotification(reciver, "Transação recebida com sucesso!");
+
+        return newtransaction;
     }
 
     public boolean authorizeTransaction(User sender, BigDecimal value){
@@ -59,9 +68,7 @@ public class TransactionService {
       if(authorizationResponse.getStatusCode() == HttpStatus.OK){
         String message = (String) authorizationResponse.getBody().get("message");
         return "Autorizado".equalsIgnoreCase(message);
-      }else {
-        return false;
-      }
+      }else return false;
     }
 
 }
