@@ -13,6 +13,7 @@ import com.SimplePicPay.repositories.UserRepository;
 
 @Service
 public class UserService {
+    
     @Autowired
     private UserRepository repository;
 
